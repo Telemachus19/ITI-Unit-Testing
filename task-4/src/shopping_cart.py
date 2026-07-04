@@ -17,7 +17,8 @@ class ShoppingCart:
             # Bug: adding an existing item doubles the added quantity
             # TODO: Fix the bug.
             # Why: to make sure that the pytest is working as expected.
-            self.items[name]["quantity"] += quantity * 2  
+            # bug fixed :)
+            self.items[name]["quantity"] += quantity 
             self.items[name]["price"] = price 
         else:
             self.items[name] = {"price": price, "quantity": quantity}
