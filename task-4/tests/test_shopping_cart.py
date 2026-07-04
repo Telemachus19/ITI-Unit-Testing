@@ -1,5 +1,5 @@
 import pytest
-from shopping_cart import ShoppingCart
+from src.shopping_cart import ShoppingCart
 
 def test_add_new_item():
     cart = ShoppingCart()
@@ -33,29 +33,32 @@ def test_add_item_strips_whitespace():
 
 def test_add_item_invalid_name():
     cart = ShoppingCart()
-    with pytest.raises(ValueError, match="Item name must be a non-empty string"):
+    correct_string = "Item name must be a non-empty string"
+    with pytest.raises(ValueError, match=correct_string):
         cart.add_item("", 1.5, 3)
-    with pytest.raises(ValueError, match="Item name must be a non-empty string"):
+    with pytest.raises(ValueError, match=correct_string):
         cart.add_item("   ", 1.5, 3)
-    with pytest.raises(ValueError, match="Item name must be a non-empty string"):
+    with pytest.raises(ValueError, match=correct_string):
         cart.add_item(None, 1.5, 3)
-    with pytest.raises(ValueError, match="Item name must be a non-empty string"):
+    with pytest.raises(ValueError, match=correct_string):
         cart.add_item(123, 1.5, 3)
 
 def test_add_item_invalid_price():
     cart = ShoppingCart()
-    with pytest.raises(ValueError, match="Price must be a non-negative number"):
+    correct_string = "Price must be a non-negative number"
+    with pytest.raises(ValueError, match=correct_string):
         cart.add_item("Apple", -0.5, 3)
-    with pytest.raises(ValueError, match="Price must be a non-negative number"):
+    with pytest.raises(ValueError, match=correct_string):
         cart.add_item("Apple", "free", 3)
 
 def test_add_item_invalid_quantity():
     cart = ShoppingCart()
-    with pytest.raises(ValueError, match="Quantity must be an integer greater than zero"):
+    correct_string = "Quantity must be an integer greater than zero"
+    with pytest.raises(ValueError, match=correct_string):
         cart.add_item("Apple", 1.5, 0)
-    with pytest.raises(ValueError, match="Quantity must be an integer greater than zero"):
+    with pytest.raises(ValueError, match=correct_string):
         cart.add_item("Apple", 1.5, -3)
-    with pytest.raises(ValueError, match="Quantity must be an integer greater than zero"):
+    with pytest.raises(ValueError, match=correct_string):
         cart.add_item("Apple", 1.5, 1.5)
 
 def test_remove_item_fully_by_default():
@@ -79,24 +82,28 @@ def test_remove_item_more_than_exists_removes_completely():
 
 def test_remove_item_not_in_cart():
     cart = ShoppingCart()
-    with pytest.raises(ValueError, match="Item 'Banana' is not in the shopping cart"):
+    # I hope this doesn't break.
+    correct_string = "Item 'Banana' is not in the shopping cart"
+    with pytest.raises(ValueError, match=correct_string):
         cart.remove_item("Banana")
 
 def test_remove_item_invalid_name():
     cart = ShoppingCart()
-    with pytest.raises(ValueError, match="Item name must be a non-empty string"):
+    correct_string = "Item name must be a non-empty string"
+    with pytest.raises(ValueError, match=correct_string):
         cart.remove_item("")
-    with pytest.raises(ValueError, match="Item name must be a non-empty string"):
+    with pytest.raises(ValueError, match=correct_string):
         cart.remove_item(None)
 
 def test_remove_item_invalid_quantity():
     cart = ShoppingCart()
+    correct_string = "Quantity to remove must be an integer greater than zero"
     cart.add_item("Apple", 1.5, 3)
-    with pytest.raises(ValueError, match="Quantity to remove must be an integer greater than zero"):
+    with pytest.raises(ValueError, match=correct_string):
         cart.remove_item("Apple", 0)
-    with pytest.raises(ValueError, match="Quantity to remove must be an integer greater than zero"):
+    with pytest.raises(ValueError, match=correct_string):
         cart.remove_item("Apple", -1)
-    with pytest.raises(ValueError, match="Quantity to remove must be an integer greater than zero"):
+    with pytest.raises(ValueError, match=correct_string):
         cart.remove_item("Apple", 1.5)
 
 def test_calculate_total_empty_cart():
